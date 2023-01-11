@@ -44,6 +44,20 @@
         <attr name="topRadius" />
         <attr name="bottomRadius" />
     </declare-styleable>
+    
+    <declare-styleable name="RoundEditText">
+        <attr name="borderWidth" />
+        <attr name="borderColor" />
+        <attr name="radius" />
+        <attr name="topLeftRadius" />
+        <attr name="topRightRadius" />
+        <attr name="bottomLeftRadius" />
+        <attr name="bottomRightRadius" />
+        <attr name="leftRadius" />
+        <attr name="rightRadius" />
+        <attr name="topRadius" />
+        <attr name="bottomRadius" />
+    </declare-styleable>
 
     <declare-styleable name="RoundImageView">
         <attr name="borderWidth" />

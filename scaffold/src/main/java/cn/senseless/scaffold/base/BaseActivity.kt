@@ -8,24 +8,20 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import cn.senseless.scaffold.R
-import com.gyf.immersionbar.ImmersionBar
-import com.lxj.xpopup.XPopup
-import com.lxj.xpopup.impl.LoadingPopupView
+import cn.senseless.scaffold.dialog.ILoading
+import cn.senseless.scaffold.dialog.XPopupLoadingImp
 import org.greenrobot.eventbus.EventBus
 
-abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
+abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), ILoading {
     protected lateinit var binding: T
         private set
-    private lateinit var loadingDialog: LoadingPopupView
+    private lateinit var loading: ILoading
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         beforeInitView(savedInstanceState)
         initView(savedInstanceState)
-        afterInitView(savedInstanceState)
-        beforeLoadData(savedInstanceState)
         loadData(savedInstanceState)
-        afterLoadData(savedInstanceState)
     }
 
     abstract fun getLayoutId(): Int
@@ -33,40 +29,49 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     open fun beforeInitView(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, getLayoutId())
         val toolbar = findViewById<View>(R.id.toolbar)
-        if (toolbar != null && toolbar is Toolbar) {
+        if (toolbar != null && toolbar is Toolbar && supportActionBar == null) {
+            setSupportActionBar(toolbar)
+            supportActionBar?.let {
+                it.setDisplayShowTitleEnabled(false)
+                it.setDisplayShowHomeEnabled(false)
+                it.setDisplayHomeAsUpEnabled(false)
+            }
         }
-        ImmersionBar.with(this)
-            .navigationBarDarkIcon(true)
-            .statusBarDarkFont(true)
-            .navigationBarColor(R.color.white)
-            .titleBar(toolbar)
-            .init()
-        loadingDialog = XPopup.Builder(this).asLoading()
+        loading = getILoadingImp()
+    }
+
+    open fun getILoadingImp(): ILoading {
+        return XPopupLoadingImp(this)
     }
 
     abstract fun initView(savedInstanceState: Bundle?)
 
-    open fun afterInitView(savedInstanceState: Bundle?) {
-    }
-
-    open fun beforeLoadData(savedInstanceState: Bundle?) {
+    open fun loadData(savedInstanceState: Bundle?) {
         if (enableEventBus() && !EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
         }
     }
 
-    abstract fun loadData(savedInstanceState: Bundle?)
-
-    open fun afterLoadData(savedInstanceState: Bundle?) {}
-
     open fun enableEventBus() = false
 
-    fun showLoading() {
-        loadingDialog.show()
+    override fun showLoading() {
+        loading.showLoading()
     }
 
-    fun dismissLoading() {
-        loadingDialog.dismiss()
+    override fun dismissLoading() {
+        loading.dismissLoading()
+    }
+
+    override fun isLoadingShown(): Boolean {
+        return loading.isLoadingShown
+    }
+
+    override fun showLoading(message: CharSequence?) {
+        loading.showLoading(message)
+    }
+
+    override fun dismissLoading(delay: Long) {
+        loading.dismissLoading(delay)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import cn.senseless.scaffold.dialog.ILoading
 import org.greenrobot.eventbus.EventBus
 
-abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding> : Fragment(), ILoading {
     private var _binding: T? = null
     protected val binding: T
         get() = _binding!!
@@ -27,10 +28,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         beforeInitView(savedInstanceState)
         initView(savedInstanceState)
-        afterInitView(savedInstanceState)
-        beforeLoadData(savedInstanceState)
         loadData(savedInstanceState)
-        afterLoadData(savedInstanceState)
     }
 
     abstract fun getLayoutId(): Int
@@ -40,26 +38,32 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     abstract fun initView(savedInstanceState: Bundle?)
 
-    open fun afterInitView(savedInstanceState: Bundle?) {}
-
-    open fun beforeLoadData(savedInstanceState: Bundle?) {
+    open fun loadData(savedInstanceState: Bundle?) {
         if (enableEventBus() && !EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
         }
     }
 
-    abstract fun loadData(savedInstanceState: Bundle?)
-
-    open fun afterLoadData(savedInstanceState: Bundle?) {}
-
     open fun enableEventBus() = false
 
-    fun dismissLoading() {
+    override fun dismissLoading() {
         (activity as BaseActivity<*>).dismissLoading()
     }
 
-    fun showLoading() {
+    override fun showLoading() {
         (activity as BaseActivity<*>).showLoading()
+    }
+
+    override fun isLoadingShown(): Boolean {
+        return (activity as BaseActivity<*>).isLoadingShown
+    }
+
+    override fun showLoading(message: CharSequence?) {
+        (activity as BaseActivity<*>).showLoading(message)
+    }
+
+    override fun dismissLoading(delay: Long) {
+        (activity as BaseActivity<*>).dismissLoading(delay)
     }
 
     override fun onDestroyView() {

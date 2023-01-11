@@ -1,8 +1,13 @@
 package cn.senseless.scaffold.model
 
+import com.google.gson.annotations.SerializedName
+
 data class ApiResult<T>(
+    @SerializedName("code")
     val code: Int,
+    @SerializedName("message")
     val message: String?,
+    @SerializedName("result")
     val result: T?
 ) {
     val isSuccessful: Boolean

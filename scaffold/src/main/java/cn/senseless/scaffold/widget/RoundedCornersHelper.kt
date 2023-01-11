@@ -66,18 +66,15 @@ class RoundedCornersHelper(private val host: View) : RoundedCorners {
         path.addRoundRect(bounds, radii, Path.Direction.CW)
         val checkpoint = canvas.save()
         canvas.clipPath(path)
-        try {
-            callSuper()
-            if (borderWidth > 0f) {
-                paint.isAntiAlias = true
-                paint.color = borderColor
-                paint.strokeWidth = borderWidth
-                paint.style = Paint.Style.STROKE
-                canvas.drawPath(path, paint)
-            }
-        } finally {
-            canvas.restoreToCount(checkpoint)
+        callSuper()
+        if (borderWidth > 0f) {
+            paint.isAntiAlias = true
+            paint.color = borderColor
+            paint.strokeWidth = borderWidth
+            paint.style = Paint.Style.STROKE
+            canvas.drawPath(path, paint)
         }
+        canvas.restoreToCount(checkpoint)
     }
 
     override fun topLeftRadius(r: Float) {
