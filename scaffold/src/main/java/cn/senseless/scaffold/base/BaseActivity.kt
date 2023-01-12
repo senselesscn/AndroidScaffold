@@ -13,8 +13,9 @@ import cn.senseless.scaffold.dialog.XPopupLoadingImp
 import org.greenrobot.eventbus.EventBus
 
 abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), ILoading {
-    protected lateinit var binding: T
-        private set
+    private var _binding: T? = null
+    protected val binding: T
+        get() = _binding!!
     private lateinit var loading: ILoading
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +28,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), ILoading
     abstract fun getLayoutId(): Int
 
     open fun beforeInitView(savedInstanceState: Bundle?) {
-        binding = DataBindingUtil.setContentView(this, getLayoutId())
+        _binding = DataBindingUtil.setContentView(this, getLayoutId())
         val toolbar = findViewById<View>(R.id.toolbar)
         if (toolbar != null && toolbar is Toolbar && supportActionBar == null) {
             setSupportActionBar(toolbar)

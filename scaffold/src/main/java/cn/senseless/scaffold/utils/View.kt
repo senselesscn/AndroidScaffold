@@ -88,7 +88,7 @@ fun ViewPager2.disableOverScroller() {
     }
 }
 
-inline fun ViewPager2.addOnPageChangeCallback(
+inline fun ViewPager2.setOnPageChangeCallback(
     crossinline onPageScrolled: (
         position: Int,
         positionOffset: Float,
@@ -148,7 +148,7 @@ inline fun ViewPager.setOnPageChangeListener(
     return listener
 }
 
-inline fun TabLayout.onTabSelectedListener(
+inline fun TabLayout.setOnTabSelectedListener(
     crossinline onTabSelected: (tab: TabLayout.Tab) -> Unit = {},
     crossinline onTabUnselected: (tab: TabLayout.Tab) -> Unit = {},
     crossinline onTabReselected: (tab: TabLayout.Tab) -> Unit = {},
@@ -170,7 +170,7 @@ inline fun TabLayout.onTabSelectedListener(
     return listener
 }
 
-inline fun SeekBar.onSeekBarChangeListener(
+inline fun SeekBar.setOnSeekBarChangeListener(
     crossinline onProgressChanged: (seekBar: SeekBar, progress: Int, fromUser: Boolean) -> Unit = { _, _, _ -> },
     crossinline onStartTrackingTouch: (seekBar: SeekBar) -> Unit = {},
     crossinline onStopTrackingTouch: (seekBar: SeekBar) -> Unit = {}
@@ -193,10 +193,10 @@ inline fun SeekBar.onSeekBarChangeListener(
 }
 
 inline fun SeekBar.doOnProgressChanged(crossinline action: (seekBar: SeekBar, progress: Int, fromUser: Boolean) -> Unit) =
-    onSeekBarChangeListener(onProgressChanged = action)
+    setOnSeekBarChangeListener(onProgressChanged = action)
 
 inline fun SeekBar.doOnStartTrackingTouch(crossinline action: (seekBar: SeekBar) -> Unit) =
-    onSeekBarChangeListener(onStartTrackingTouch = action)
+    setOnSeekBarChangeListener(onStartTrackingTouch = action)
 
 inline fun SeekBar.doOnStopTrackingTouch(crossinline action: (seekBar: SeekBar) -> Unit) =
-    onSeekBarChangeListener(onStopTrackingTouch = action)
+    setOnSeekBarChangeListener(onStopTrackingTouch = action)

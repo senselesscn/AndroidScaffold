@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -45,6 +46,10 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), ILoading {
     }
 
     open fun enableEventBus() = false
+
+    fun setArguments(vararg args: Pair<String, Any?>) {
+        super.setArguments(bundleOf(*args))
+    }
 
     override fun dismissLoading() {
         (activity as BaseActivity<*>).dismissLoading()
