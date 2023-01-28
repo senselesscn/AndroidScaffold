@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -25,6 +26,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), ILoading {
         return binding.root
     }
 
+    @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         beforeInitView(savedInstanceState)
@@ -34,11 +36,13 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), ILoading {
 
     abstract fun getLayoutId(): Int
 
+    @CallSuper
     open fun beforeInitView(savedInstanceState: Bundle?) {
     }
 
     abstract fun initView(savedInstanceState: Bundle?)
 
+    @CallSuper
     open fun loadData(savedInstanceState: Bundle?) {
         if (enableEventBus() && !EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)

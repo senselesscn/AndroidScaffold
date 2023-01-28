@@ -8,7 +8,7 @@ import cn.senseless.scaffold.R
 
 class RoundedCornersHelper(private val host: View) : RoundedCorners {
     private val path: Path = Path()
-    private val paint: Paint = Paint()
+    private val paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val bounds: RectF = RectF()
     private var topLeftRadius = 0f
     private var topRightRadius = 0f
@@ -23,7 +23,6 @@ class RoundedCornersHelper(private val host: View) : RoundedCorners {
     }
 
     fun loadAttrs(context: Context, attrs: AttributeSet?) {
-        paint.isAntiAlias = true
         hasLoadAttrs = false
         val a = context.obtainStyledAttributes(attrs, R.styleable.RoundView)
         topLeftRadius(a.getDimension(R.styleable.RoundView_topLeftRadius, 0f))

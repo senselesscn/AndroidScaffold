@@ -3,6 +3,7 @@ package cn.senseless.scaffold.base
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
@@ -27,6 +28,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), ILoading
 
     abstract fun getLayoutId(): Int
 
+    @CallSuper
     open fun beforeInitView(savedInstanceState: Bundle?) {
         _binding = DataBindingUtil.setContentView(this, getLayoutId())
         val toolbar = findViewById<View>(R.id.toolbar)
@@ -47,6 +49,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), ILoading
 
     abstract fun initView(savedInstanceState: Bundle?)
 
+    @CallSuper
     open fun loadData(savedInstanceState: Bundle?) {
         if (enableEventBus() && !EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)

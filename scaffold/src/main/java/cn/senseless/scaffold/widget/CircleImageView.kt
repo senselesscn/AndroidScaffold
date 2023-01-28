@@ -14,7 +14,7 @@ class CircleImageView : AppCompatImageView {
     private val path = Path()
     var borderColor = Color.WHITE
     var borderWidth = 0f
-    private val paint = Paint()
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val point = PointF()
 
     constructor(context: Context) : super(context)
@@ -31,7 +31,6 @@ class CircleImageView : AppCompatImageView {
     }
 
     private fun loadAttrs(attrs: AttributeSet?) {
-        paint.isAntiAlias = true
         val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView)
         borderColor = a.getColor(R.styleable.CircleImageView_borderColor, 0)
         borderWidth = a.getDimension(R.styleable.CircleImageView_borderWidth, 0f)

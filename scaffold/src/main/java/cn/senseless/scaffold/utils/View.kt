@@ -3,6 +3,7 @@
 package cn.senseless.scaffold.utils
 
 import android.annotation.SuppressLint
+import android.graphics.Rect
 import android.os.Build
 import android.os.SystemClock
 import android.view.GestureDetector
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.forEach
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
@@ -66,7 +68,6 @@ fun View.onMultiClick(
     }
 }
 
-
 fun View.disableTooltipText() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         if (this is ViewGroup) {
@@ -78,12 +79,29 @@ fun View.disableTooltipText() {
     }
 }
 
+fun RecyclerView.disableAnimations() {
+    (itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
+}
 
-fun ViewPager2.disableOverScroller() {
-    forEach {
-        if (it is RecyclerView) {
-            it.overScrollMode = View.OVER_SCROLL_NEVER
-            return
+inline fun RecyclerView.setItemOffsets(crossinline block: (position: Int, outRect: Rect) -> Unit) {
+    addItemDecoration(object : RecyclerView.ItemDecoration() {
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            super.getItemOffsets(outRect, view, parent, state)
+            block(parent.getChildAdapterPosition(view), outRect)
+        }
+    })
+}
+
+fun View.disableOverScroller() {
+    overScrollMode = View.OVER_SCROLL_NEVER
+    if (this is ViewGroup) {
+        forEach {
+            it.disableOverScroller()
         }
     }
 }

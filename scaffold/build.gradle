@@ -69,8 +69,6 @@ dependencies {
 
     api 'com.github.li-xiaojun:XPopup:2.9.18'
 
-    api 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
     api "io.coil-kt:coil:2.2.2"
 
     api "org.greenrobot:eventbus:3.3.1"
@@ -89,7 +87,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.github.senselesscn'
                 artifactId = 'AndroidScaffold'
-                version = '1.0.2'
+                version = '1.0.3'
             }
         }
     }
