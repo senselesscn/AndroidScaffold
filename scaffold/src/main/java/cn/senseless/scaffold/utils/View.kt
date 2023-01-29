@@ -83,7 +83,13 @@ fun RecyclerView.disableAnimations() {
     (itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
 }
 
+/**
+ * 使用此函数会清除已有的Decoration
+ */
 inline fun RecyclerView.setItemOffsets(crossinline block: (position: Int, outRect: Rect) -> Unit) {
+    for (i in 0 until itemDecorationCount) {
+        removeItemDecorationAt(i)
+    }
     addItemDecoration(object : RecyclerView.ItemDecoration() {
         override fun getItemOffsets(
             outRect: Rect,

@@ -13,7 +13,7 @@ import cn.senseless.scaffold.dialog.ILoading
 import cn.senseless.scaffold.dialog.XPopupLoadingImp
 import org.greenrobot.eventbus.EventBus
 
-abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity(), ILoading {
+abstract class ScaffoldActivity<T : ViewDataBinding> : AppCompatActivity(), ILoading {
     private var _binding: T? = null
     protected val binding: T
         get() = _binding!!

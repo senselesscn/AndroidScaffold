@@ -57,6 +57,10 @@ inline fun <reified T : Activity> Context.startActivity(vararg extras: Pair<Stri
     startActivity(intent)
 }
 
+inline fun <reified T : Activity> Fragment.startActivity(vararg extras: Pair<String, Any?>) {
+    requireContext().startActivity<T>(*extras)
+}
+
 inline fun <reified T : Service> Context.startService(vararg extras: Pair<String, Any?>) {
     val intent = Intent(this, T::class.java)
     intent.putExtras(bundleOf(*extras))

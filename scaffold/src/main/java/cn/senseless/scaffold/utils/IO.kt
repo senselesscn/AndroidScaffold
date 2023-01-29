@@ -2,6 +2,7 @@
 
 package cn.senseless.scaffold.utils
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -25,6 +26,7 @@ fun Uri.asRequestBody(contentType: MediaType? = null): RequestBody {
     }
 }
 
+@SuppressLint("Recycle")
 fun Uri.openInputStream(): InputStream? {
     val contentResolver = ApplicationHolder.appContext.contentResolver
     return contentResolver.openInputStream(this)

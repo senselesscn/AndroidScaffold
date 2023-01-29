@@ -1,6 +1,5 @@
 package cn.senseless.scaffold.utils
 
-import android.util.Log
 import androidx.lifecycle.liveData
 import cn.senseless.scaffold.model.State
 import kotlinx.coroutines.Dispatchers
@@ -17,13 +16,23 @@ import java.io.OutputStream
 import java.net.Proxy
 
 object DownloadUtils {
+    private val httpLoggingInterceptor by lazy {
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.HEADERS
+        }
+    }
     private val okHttpClient by lazy {
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
         OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .proxy(Proxy.NO_PROXY)
             .build()
+    }
+
+    /**
+     * 禁止设置 HttpLoggingInterceptor.Level.BODY
+     */
+    fun setLogLevel(level: HttpLoggingInterceptor.Level) {
+        httpLoggingInterceptor.level = level
     }
 
     fun download(url: String, file: File) = liveData<State<File>>(Dispatchers.IO) {

@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import cn.senseless.scaffold.dialog.ILoading
 import org.greenrobot.eventbus.EventBus
 
-abstract class BaseFragment<T : ViewDataBinding> : Fragment(), ILoading {
+abstract class ScaffoldFragment<T : ViewDataBinding> : Fragment(), ILoading {
     private var _binding: T? = null
     protected val binding: T
         get() = _binding!!
@@ -56,23 +56,23 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(), ILoading {
     }
 
     override fun dismissLoading() {
-        (activity as BaseActivity<*>).dismissLoading()
+        (activity as ScaffoldActivity<*>).dismissLoading()
     }
 
     override fun showLoading() {
-        (activity as BaseActivity<*>).showLoading()
+        (activity as ScaffoldActivity<*>).showLoading()
     }
 
     override fun isLoadingShown(): Boolean {
-        return (activity as BaseActivity<*>).isLoadingShown
+        return (activity as ScaffoldActivity<*>).isLoadingShown
     }
 
     override fun showLoading(message: CharSequence?) {
-        (activity as BaseActivity<*>).showLoading(message)
+        (activity as ScaffoldActivity<*>).showLoading(message)
     }
 
     override fun dismissLoading(delay: Long) {
-        (activity as BaseActivity<*>).dismissLoading(delay)
+        (activity as ScaffoldActivity<*>).dismissLoading(delay)
     }
 
     override fun onDestroyView() {

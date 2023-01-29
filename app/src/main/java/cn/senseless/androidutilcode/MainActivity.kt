@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.widget.doAfterTextChanged
 import cn.senseless.androidutilcode.databinding.ActivityMainBinding
-import cn.senseless.scaffold.base.BaseActivity
+import cn.senseless.scaffold.base.ScaffoldActivity
 import cn.senseless.scaffold.utils.doOnProgressChanged
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : ScaffoldActivity<ActivityMainBinding>() {
 
     override fun getLayoutId() = R.layout.activity_main
 
