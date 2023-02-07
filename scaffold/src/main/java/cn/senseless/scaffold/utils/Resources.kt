@@ -13,31 +13,30 @@ import androidx.fragment.app.Fragment
  * 输入id，返回与当前主题关联的Drawable
  */
 @Throws(NotFoundException::class)
-fun Context.compatDrawable(@DrawableRes id: Int): Drawable {
+inline fun Context.compatDrawable(@DrawableRes id: Int): Drawable {
     return ContextCompat.getDrawable(this, id) ?: throw NotFoundException("Drawable资源不存在")
 }
 
-fun View.compatDrawable(@DrawableRes id: Int): Drawable {
+inline fun View.compatDrawable(@DrawableRes id: Int): Drawable {
     return context.compatDrawable(id)
 }
 
 @Throws(IllegalStateException::class)
-fun Fragment.compatDrawable(@DrawableRes id: Int): Drawable {
+inline fun Fragment.compatDrawable(@DrawableRes id: Int): Drawable {
     return requireContext().compatDrawable(id)
 }
 
 /**
  * 输入id，返回与当前主题关联的Color
  */
-fun Context.compatColor(@ColorRes id: Int): Int {
+inline fun Context.compatColor(@ColorRes id: Int): Int {
     return ContextCompat.getColor(this, id)
 }
 
-fun View.compatColor(@ColorRes id: Int): Int {
+inline fun View.compatColor(@ColorRes id: Int): Int {
     return context.compatColor(id)
 }
 
-@Throws(IllegalStateException::class)
-fun Fragment.compatColor(@ColorRes id: Int): Int {
+inline fun Fragment.compatColor(@ColorRes id: Int): Int {
     return requireContext().compatColor(id)
 }

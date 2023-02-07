@@ -20,11 +20,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 
 
-fun View.onClick(action: (v: View) -> Unit) {
-    setOnClickListener(action)
+inline fun View.onClick(crossinline action: (v: View) -> Unit) {
+    onClick(400, action)
 }
 
-fun View.onClick(gap: Long, action: (v: View) -> Unit) {
+inline fun View.onClick(gap: Long, crossinline action: (v: View) -> Unit) {
     val onClickListener = object : View.OnClickListener {
         var lastClickElapsedRealtime = 0L
 
@@ -79,14 +79,14 @@ fun View.disableTooltipText() {
     }
 }
 
-fun RecyclerView.disableAnimations() {
+inline fun RecyclerView.disableAnimations() {
     (itemAnimator as? DefaultItemAnimator)?.supportsChangeAnimations = false
 }
 
 /**
  * 使用此函数会清除已有的Decoration
  */
-inline fun RecyclerView.setItemOffsets(crossinline block: (position: Int, outRect: Rect) -> Unit) {
+fun RecyclerView.setItemOffsets(block: (position: Int, outRect: Rect) -> Unit) {
     for (i in 0 until itemDecorationCount) {
         removeItemDecorationAt(i)
     }
@@ -216,11 +216,14 @@ inline fun SeekBar.setOnSeekBarChangeListener(
     return listener
 }
 
-inline fun SeekBar.doOnProgressChanged(crossinline action: (seekBar: SeekBar, progress: Int, fromUser: Boolean) -> Unit) =
-    setOnSeekBarChangeListener(onProgressChanged = action)
+inline fun SeekBar.doOnProgressChanged(
+    crossinline action: (seekBar: SeekBar, progress: Int, fromUser: Boolean) -> Unit
+) = setOnSeekBarChangeListener(onProgressChanged = action)
 
-inline fun SeekBar.doOnStartTrackingTouch(crossinline action: (seekBar: SeekBar) -> Unit) =
-    setOnSeekBarChangeListener(onStartTrackingTouch = action)
+inline fun SeekBar.doOnStartTrackingTouch(
+    crossinline action: (seekBar: SeekBar) -> Unit
+) = setOnSeekBarChangeListener(onStartTrackingTouch = action)
 
-inline fun SeekBar.doOnStopTrackingTouch(crossinline action: (seekBar: SeekBar) -> Unit) =
-    setOnSeekBarChangeListener(onStopTrackingTouch = action)
+inline fun SeekBar.doOnStopTrackingTouch(
+    crossinline action: (seekBar: SeekBar) -> Unit
+) = setOnSeekBarChangeListener(onStopTrackingTouch = action)

@@ -17,6 +17,9 @@ class RoundedCornersHelper(private val host: View) : RoundedCorners {
     private var borderColor = 0
     private var borderWidth = 0f
     private var hasLoadAttrs = false
+    private val drawFilter = PaintFlagsDrawFilter(
+        0, Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG
+    )
 
     fun onSizeChange(w: Int, h: Int) {
         bounds.set(0f, 0f, w.toFloat(), h.toFloat())
@@ -46,10 +49,7 @@ class RoundedCornersHelper(private val host: View) : RoundedCorners {
             return
         }
         if (canvas.drawFilter == null) {
-            canvas.drawFilter = PaintFlagsDrawFilter(
-                0,
-                Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG
-            )
+            canvas.drawFilter = drawFilter
         }
         path.reset()
         val radii = floatArrayOf(
@@ -67,7 +67,6 @@ class RoundedCornersHelper(private val host: View) : RoundedCorners {
         canvas.clipPath(path)
         callSuper()
         if (borderWidth > 0f) {
-            paint.isAntiAlias = true
             paint.color = borderColor
             paint.strokeWidth = borderWidth
             paint.style = Paint.Style.STROKE

@@ -35,7 +35,10 @@ object DownloadUtils {
         httpLoggingInterceptor.level = level
     }
 
-    fun download(url: String, file: File) = liveData<State<File>>(Dispatchers.IO) {
+    /**
+     * 异步下载，带进度
+     */
+    fun asyncDownload(url: String, file: File) = liveData<State<File>>(Dispatchers.IO) {
         emit(State.Loading(0))
         val request = Request.Builder()
             .url(url)
@@ -70,6 +73,37 @@ object DownloadUtils {
             } ?: throw IOException("content body is null")
         } catch (e: Exception) {
             emit(State.Error(0, "下载失败：${e.message}"))
+        } finally {
+            inputStream?.closeQuietly()
+            outputStream?.closeQuietly()
+        }
+    }
+
+    /**
+     * 同步下载
+     */
+    @Throws(IOException::class)
+    fun syncDownload(url: String, file: File) {
+        val request = Request.Builder()
+            .url(url)
+            .get()
+            .addHeader("Connection", "close")
+            .build()
+        var outputStream: OutputStream? = null
+        var inputStream: InputStream? = null
+        try {
+            okHttpClient.newCall(request).execute().body?.use {
+                inputStream = it.byteStream()
+                outputStream = file.outputStream()
+                var bytesCopied: Long = 0
+                val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+                var bytes = inputStream!!.read(buffer)
+                while (bytes >= 0) {
+                    outputStream!!.write(buffer, 0, bytes)
+                    bytesCopied += bytes
+                    bytes = inputStream!!.read(buffer)
+                }
+            } ?: throw IOException("content body is null")
         } finally {
             inputStream?.closeQuietly()
             outputStream?.closeQuietly()

@@ -36,6 +36,27 @@ object DateUtils {
     }
 
     @JvmStatic
+    fun secondsToms(second: Int, padZero: Boolean = false): String {
+        val m = second / 60 % 60
+        val s = second % 60
+        if (padZero) {
+            return buildString {
+                append(':')
+                if (m < 10) {
+                    append('0')
+                }
+                append(m)
+                append(':')
+                if (s < 10) {
+                    append('0')
+                }
+                append(s)
+            }
+        }
+        return "$m:$s"
+    }
+
+    @JvmStatic
     fun dateFormat(date: Date, format: String): String {
         val simpleDateFormat = SimpleDateFormat(format, Locale.CHINA)
         return simpleDateFormat.format(date)

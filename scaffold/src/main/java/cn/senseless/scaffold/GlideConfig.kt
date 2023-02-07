@@ -16,7 +16,7 @@ class GlideConfig : AppGlideModule() {
         super.applyOptions(context, builder)
         builder.setDefaultRequestOptions(RequestOptions().dontAnimate())
         builder.useLifecycleInsteadOfInjectingFragments(true)
-        builder.setDiskCache(ExternalPreferredCacheDiskCacheFactory(context, 200 * 1024 * 1024))
+        builder.setDiskCache(ExternalPreferredCacheDiskCacheFactory(context, 512 * 1024 * 1024))
     }
 
     override fun isManifestParsingEnabled(): Boolean {

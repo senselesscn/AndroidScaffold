@@ -8,16 +8,12 @@ import androidx.appcompat.widget.AppCompatImageView
 /**
  * 直接画布切圆角的TextView，允许设置边框
  */
-class RoundImageView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
-) : AppCompatImageView(context, attrs), RoundedCorners {
+class RoundImageView : AppCompatImageView, RoundedCorners {
     private val roundHelper = RoundedCornersHelper(this)
 
-    init {
-        loadAttrs(attrs)
-    }
-
-    private fun loadAttrs(attrs: AttributeSet?) {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         roundHelper.loadAttrs(context, attrs)
     }
 

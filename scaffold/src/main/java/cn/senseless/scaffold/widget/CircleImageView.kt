@@ -17,20 +17,14 @@ class CircleImageView : AppCompatImageView {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val point = PointF()
 
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        loadAttrs(attrs)
-    }
-
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
     ) {
-        loadAttrs(attrs)
-    }
-
-    private fun loadAttrs(attrs: AttributeSet?) {
+        scaleType = ScaleType.CENTER_CROP
         val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView)
         borderColor = a.getColor(R.styleable.CircleImageView_borderColor, 0)
         borderWidth = a.getDimension(R.styleable.CircleImageView_borderWidth, 0f)
