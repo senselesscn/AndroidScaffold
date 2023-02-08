@@ -20,11 +20,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 
 
-inline fun View.onClick(crossinline action: (v: View) -> Unit) {
+fun View.onClick(action: (v: View) -> Unit) {
     onClick(400, action)
 }
 
-inline fun View.onClick(gap: Long, crossinline action: (v: View) -> Unit) {
+fun View.onClick(gap: Long, action: (v: View) -> Unit) {
     val onClickListener = object : View.OnClickListener {
         var lastClickElapsedRealtime = 0L
 

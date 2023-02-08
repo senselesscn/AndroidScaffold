@@ -15,4 +15,6 @@ inline fun Context.isGrantedPermission(permission: String): Boolean {
     return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
 
-inline fun Fragment.isGrantedPermission(permission: String) = requireContext().isGrantedPermission(permission)
+inline fun Fragment.isGrantedPermission(permission: String): Boolean {
+    return ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
+}

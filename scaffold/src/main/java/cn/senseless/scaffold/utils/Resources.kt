@@ -12,31 +12,17 @@ import androidx.fragment.app.Fragment
 /**
  * 输入id，返回与当前主题关联的Drawable
  */
-@Throws(NotFoundException::class)
-inline fun Context.compatDrawable(@DrawableRes id: Int): Drawable {
-    return ContextCompat.getDrawable(this, id) ?: throw NotFoundException("Drawable资源不存在")
-}
+inline fun Context.getDrawableCompat(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id)!!
 
-inline fun View.compatDrawable(@DrawableRes id: Int): Drawable {
-    return context.compatDrawable(id)
-}
+inline fun View.getDrawableCompat(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(context, id)!!
 
-@Throws(IllegalStateException::class)
-inline fun Fragment.compatDrawable(@DrawableRes id: Int): Drawable {
-    return requireContext().compatDrawable(id)
-}
+inline fun Fragment.getDrawableCompat(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(requireContext(), id)!!
 
 /**
  * 输入id，返回与当前主题关联的Color
  */
-inline fun Context.compatColor(@ColorRes id: Int): Int {
-    return ContextCompat.getColor(this, id)
-}
+inline fun Context.getColorCompat(@ColorRes id: Int): Int = ContextCompat.getColor(this, id)
 
-inline fun View.compatColor(@ColorRes id: Int): Int {
-    return context.compatColor(id)
-}
+inline fun View.getColorCompat(@ColorRes id: Int): Int = ContextCompat.getColor(context, id)
 
-inline fun Fragment.compatColor(@ColorRes id: Int): Int {
-    return requireContext().compatColor(id)
-}
+inline fun Fragment.getColorCompat(@ColorRes id: Int): Int = ContextCompat.getColor(requireContext(), id)
