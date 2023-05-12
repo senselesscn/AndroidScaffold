@@ -3,6 +3,7 @@
 package cn.senseless.scaffold.utils
 
 import android.annotation.SuppressLint
+import android.graphics.Outline
 import android.graphics.Rect
 import android.os.Build
 import android.os.SystemClock
@@ -10,6 +11,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import android.widget.SeekBar
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.forEach
@@ -86,7 +88,7 @@ inline fun RecyclerView.disableAnimations() {
 /**
  * 使用此函数会清除已有的Decoration
  */
-fun RecyclerView.setItemOffsets(block: (position: Int, outRect: Rect) -> Unit) {
+fun RecyclerView.setItemOffsets(block: (position: Int, itemCount: Int, outRect: Rect) -> Unit) {
     for (i in 0 until itemDecorationCount) {
         removeItemDecorationAt(i)
     }
@@ -98,7 +100,8 @@ fun RecyclerView.setItemOffsets(block: (position: Int, outRect: Rect) -> Unit) {
             state: RecyclerView.State
         ) {
             super.getItemOffsets(outRect, view, parent, state)
-            block(parent.getChildAdapterPosition(view), outRect)
+            val adapterPosition = parent.getChildAdapterPosition(view)
+            block(adapterPosition, adapter?.itemCount ?: 0, outRect)
         }
     })
 }
@@ -112,7 +115,7 @@ fun View.disableOverScroller() {
     }
 }
 
-inline fun ViewPager2.setOnPageChangeCallback(
+inline fun ViewPager2.setOnPageChangeListener(
     crossinline onPageScrolled: (
         position: Int,
         positionOffset: Float,
@@ -227,3 +230,21 @@ inline fun SeekBar.doOnStartTrackingTouch(
 inline fun SeekBar.doOnStopTrackingTouch(
     crossinline action: (seekBar: SeekBar) -> Unit
 ) = setOnSeekBarChangeListener(onStopTrackingTouch = action)
+
+fun View.clipRadius(radius: Float) {
+    clipToOutline = true
+    outlineProvider = object : ViewOutlineProvider() {
+        override fun getOutline(view: View, outline: Outline) {
+            outline.setRoundRect(0, 0, view.width, view.height, radius)
+        }
+    }
+}
+
+fun View.clipOval() {
+    clipToOutline = true
+    outlineProvider = object : ViewOutlineProvider() {
+        override fun getOutline(view: View, outline: Outline) {
+            outline.setOval(0, 0, view.width, view.height)
+        }
+    }
+}

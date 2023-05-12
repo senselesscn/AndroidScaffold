@@ -6,17 +6,18 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
 /**
  * 输入id，返回与当前主题关联的Drawable
  */
-inline fun Context.getDrawableCompat(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id)!!
+inline fun Context.getDrawableCompat(@DrawableRes id: Int): Drawable = AppCompatResources.getDrawable(this, id)!!
 
-inline fun View.getDrawableCompat(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(context, id)!!
+inline fun View.getDrawableCompat(@DrawableRes id: Int): Drawable = AppCompatResources.getDrawable(context, id)!!
 
-inline fun Fragment.getDrawableCompat(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(requireContext(), id)!!
+inline fun Fragment.getDrawableCompat(@DrawableRes id: Int): Drawable = AppCompatResources.getDrawable(requireContext(), id)!!
 
 /**
  * 输入id，返回与当前主题关联的Color

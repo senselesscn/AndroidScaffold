@@ -3,13 +3,17 @@ package cn.senseless.scaffold.utils
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import java.util.*
+import java.util.LinkedList
 
 object ActivityManager : Application.ActivityLifecycleCallbacks {
     private val activities = LinkedList<Activity>()
 
     fun register(application: Application) {
         application.registerActivityLifecycleCallbacks(this)
+    }
+
+    fun getActivities(): List<Activity> {
+        return activities
     }
 
     //栈顶
