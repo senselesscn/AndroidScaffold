@@ -4,6 +4,7 @@ package cn.senseless.scaffold.utils
 
 import android.annotation.SuppressLint
 import android.graphics.Outline
+import android.graphics.Path
 import android.graphics.Rect
 import android.os.Build
 import android.os.SystemClock
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import android.widget.SeekBar
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.forEach
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -49,17 +51,17 @@ fun View.onMultiClick(
 ) {
     isClickable = true
     val gestureListener = object : GestureDetector.SimpleOnGestureListener() {
-        override fun onDown(e: MotionEvent?): Boolean {
+        override fun onDown(e: MotionEvent): Boolean {
             onDown(this@onMultiClick)
             return super.onDown(e)
         }
 
-        override fun onDoubleTap(e: MotionEvent?): Boolean {
+        override fun onDoubleTap(e: MotionEvent): Boolean {
             onDoubleClick(this@onMultiClick)
             return true
         }
 
-        override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+        override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
             onClick(this@onMultiClick)
             return true
         }
@@ -115,7 +117,7 @@ fun View.disableOverScroller() {
     }
 }
 
-inline fun ViewPager2.setOnPageChangeListener(
+inline fun ViewPager2.addOnPageChangeListener(
     crossinline onPageScrolled: (
         position: Int,
         positionOffset: Float,
@@ -144,7 +146,7 @@ inline fun ViewPager2.setOnPageChangeListener(
     return listener
 }
 
-inline fun ViewPager.setOnPageChangeListener(
+inline fun ViewPager.addOnPageChangeListener(
     crossinline onPageScrolled: (
         position: Int,
         positionOffset: Float,
@@ -175,7 +177,7 @@ inline fun ViewPager.setOnPageChangeListener(
     return listener
 }
 
-inline fun TabLayout.setOnTabSelectedListener(
+inline fun TabLayout.addOnTabSelectedListener(
     crossinline onTabSelected: (tab: TabLayout.Tab) -> Unit = {},
     crossinline onTabUnselected: (tab: TabLayout.Tab) -> Unit = {},
     crossinline onTabReselected: (tab: TabLayout.Tab) -> Unit = {},
@@ -236,6 +238,23 @@ fun View.clipRadius(radius: Float) {
     outlineProvider = object : ViewOutlineProvider() {
         override fun getOutline(view: View, outline: Outline) {
             outline.setRoundRect(0, 0, view.width, view.height, radius)
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.R)
+fun View.clipRadius(topLeft: Float, topRight: Float, bottomRight: Float, bottomLeft: Float) {
+    clipToOutline = true
+    outlineProvider = object : ViewOutlineProvider() {
+
+        override fun getOutline(view: View, outline: Outline) {
+            val path = Path()
+            val radii = floatArrayOf(
+                topLeft, topLeft, topRight, topRight,
+                bottomRight, bottomRight, bottomLeft, bottomLeft
+            )
+            path.addRoundRect(0f, 0f, view.width.toFloat(), view.height.toFloat(), radii, Path.Direction.CW)
+            outline.setPath(path)
         }
     }
 }
