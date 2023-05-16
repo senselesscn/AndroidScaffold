@@ -44,6 +44,7 @@
             android:background="@color/teal_200" />
 
         <cn.senseless.scaffold.widget.CircleImageView
+            android:id="@+id/iv_circle"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@color/teal_700"

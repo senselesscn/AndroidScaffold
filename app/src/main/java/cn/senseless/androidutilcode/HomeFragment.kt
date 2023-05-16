@@ -21,7 +21,7 @@ class HomeFragment : ScaffoldFragment<FragmentHomeBinding>() {
         binding.vOval.clipOval()
         binding.vRound.clipRadius(16f.dp)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            binding.vRound2.clipRadius(16f.dp,0f,16.dp,0f)
+            binding.vRound2.clipRadius(16f.dp, 0f, 16.dp, 0f)
         }
     }
 }

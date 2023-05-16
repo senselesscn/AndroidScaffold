@@ -6,7 +6,7 @@ import android.graphics.Bitmap
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 
-fun Bitmap.readBytes(format: Bitmap.CompressFormat): ByteArray {
+fun Bitmap.readAllBytes(format: Bitmap.CompressFormat): ByteArray {
     val baos = ByteArrayOutputStream()
     compress(format, 100, baos)
     return baos.toByteArray()
