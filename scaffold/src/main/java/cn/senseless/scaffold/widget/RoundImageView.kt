@@ -18,7 +18,10 @@ class RoundImageView : AppCompatImageView {
     private var borderColor = Color.TRANSPARENT
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
-    constructor(context: Context) : super(context)
+    constructor(context: Context) : super(context){
+        init(null)
+    }
+
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init(attrs)
     }

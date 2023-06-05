@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
@@ -30,6 +31,12 @@ fun Fragment.launch(
     start: CoroutineStart = CoroutineStart.DEFAULT,
     block: suspend CoroutineScope.() -> Unit
 ) = viewLifecycleOwner.lifecycleScope.launch(context, start, block)
+
+fun LifecycleService.launch(
+    context: CoroutineContext = Dispatchers.Main,
+    start: CoroutineStart = CoroutineStart.DEFAULT,
+    block: suspend CoroutineScope.() -> Unit
+) = lifecycleScope.launch(context, start, block)
 
 fun <T> Activity.intentValue(key: String) = lazy {
     intent.extras?.get(key) as? T
