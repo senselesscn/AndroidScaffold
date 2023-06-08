@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="black" tools:ignore="ResourceName">#FF000000</color>
+    <color name="white" tools:ignore="ResourceName">#FFFFFFFF</color>
+    <color name="sca_textColor">#737B80</color>
 </resources>

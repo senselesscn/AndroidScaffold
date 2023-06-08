@@ -1,4 +1,4 @@
-package cn.senseless.scaffold.base
+package cn.senseless.scaffold.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.core.os.bundleOf
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
-import cn.senseless.scaffold.dialog.ILoading
+import androidx.fragment.app.DialogFragment
 import org.greenrobot.eventbus.EventBus
 import java.lang.reflect.ParameterizedType
 
-abstract class ScaffoldFragment<T : ViewDataBinding> : Fragment(), ILoading {
+abstract class ScaffoldDialogFragment<T : ViewDataBinding> : DialogFragment() {
     private var _binding: T? = null
     protected val binding: T
         get() = _binding!!
@@ -59,32 +58,11 @@ abstract class ScaffoldFragment<T : ViewDataBinding> : Fragment(), ILoading {
         super.setArguments(bundleOf(*args))
     }
 
-    override fun dismissLoading() {
-        (activity as ScaffoldActivity<*>).dismissLoading()
-    }
-
-    override fun showLoading() {
-        (activity as ScaffoldActivity<*>).showLoading()
-    }
-
-    override fun isLoadingShown(): Boolean {
-        return (activity as ScaffoldActivity<*>).isLoadingShown
-    }
-
-    override fun showLoading(message: CharSequence?) {
-        (activity as ScaffoldActivity<*>).showLoading(message)
-    }
-
-    override fun dismissLoading(delay: Long) {
-        (activity as ScaffoldActivity<*>).dismissLoading(delay)
-    }
-
     override fun onDestroyView() {
-        if (EventBus.getDefault().isRegistered(this)) {
+        if (enableEventBus() && EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
         }
         _binding = null
         super.onDestroyView()
     }
-
 }

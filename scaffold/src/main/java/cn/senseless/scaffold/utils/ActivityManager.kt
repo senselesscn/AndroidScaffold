@@ -21,7 +21,7 @@ object ActivityManager : Application.ActivityLifecycleCallbacks {
         return activities.peekLast()
     }
 
-    operator fun get(clazz: Class<Activity>): Activity? {
+    fun find(clazz: Class<Activity>): Activity? {
         return activities.find { it::class.java == clazz }
     }
 

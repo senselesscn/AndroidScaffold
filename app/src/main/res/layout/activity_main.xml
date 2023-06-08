@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white"
         tools:context=".MainActivity">
 
         <androidx.appcompat.widget.Toolbar
@@ -17,13 +16,13 @@
             android:background="@color/white"
             android:elevation="2dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/app_name" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <FrameLayout
+        <fragment
             android:id="@+id/fragment_container"
+            android:name="cn.senseless.androidutilcode.video.VideoListFragment"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
     </LinearLayout>
 </layout>

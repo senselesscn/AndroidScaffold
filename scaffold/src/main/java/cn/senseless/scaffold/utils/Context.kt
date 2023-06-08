@@ -18,7 +18,6 @@ import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 
 fun FragmentActivity.launch(
     context: CoroutineContext = Dispatchers.Main,
@@ -49,10 +48,11 @@ fun <T> Fragment.argumentsValue(key: String) = lazy {
 /**
  * 获取元数据，获取不到返回null
  */
+@Suppress("DEPRECATION")
 fun Context.getMetaData(key: String): String? {
     val result = kotlin.runCatching {
         val info = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
-        info.metaData[key]?.toString()
+        info.metaData?.getString(key)
     }
     return result.getOrNull()
 }
@@ -60,6 +60,7 @@ fun Context.getMetaData(key: String): String? {
 /**
  * 获取app版本
  */
+@Suppress("DEPRECATION")
 val Context.appVersionName: String
     get() {
         return packageManager.getPackageInfo(packageName, 0).versionName

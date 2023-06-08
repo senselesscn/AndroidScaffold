@@ -26,4 +26,10 @@
         <attr name="borderColor" />
         <attr name="borderWidth" />
     </declare-styleable>
+
+    <declare-styleable name="StateLayout">
+        <attr name="errorLayoutId" format="reference" />
+        <attr name="emptyLayoutId" format="reference" />
+        <attr name="loadingLayoutId" format="reference" />
+    </declare-styleable>
 </resources>

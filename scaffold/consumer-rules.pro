@@ -1,2 +1,3 @@
 -dontwarn com.lxj.xpopup.widget.**
 -keep class com.lxj.xpopup.widget.**{*;}
+-keep class * extends androidx.databinding.ViewDataBinding{*;}

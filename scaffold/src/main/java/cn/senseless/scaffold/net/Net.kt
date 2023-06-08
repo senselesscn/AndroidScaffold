@@ -14,6 +14,7 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -105,16 +106,26 @@ class Http(private val url: String) {
     private fun <T> parseResponse(clazz: Class<T>, response: Response): T {
         val responseBody = response.body ?: throw IOException("responseBody is null")
         if (clazz == InputStream::class.java) {
+            @Suppress("UNCHECKED_CAST")
             return responseBody.byteStream() as T
         }
         if (clazz == String::class.java || clazz == CharSequence::class.java) {
+            @Suppress("UNCHECKED_CAST")
             return responseBody.string() as T
         }
         return JsonUtils.fromJson(responseBody.string(), clazz)
     }
 
     companion object {
-        private val okHttpClient: OkHttpClient = OkHttpClient()
+        val httpLoggingInterceptor = HttpLoggingInterceptor()
+
+        init {
+            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        private val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(httpLoggingInterceptor)
+            .build()
     }
 }
 
