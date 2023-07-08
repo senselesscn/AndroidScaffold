@@ -8,6 +8,7 @@ import androidx.annotation.CallSuper
 import androidx.core.os.bundleOf
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import org.greenrobot.eventbus.EventBus
 import java.lang.reflect.ParameterizedType
 
@@ -64,5 +65,41 @@ abstract class ScaffoldDialogFragment<T : ViewDataBinding> : DialogFragment() {
         }
         _binding = null
         super.onDestroyView()
+    }
+
+    fun show(manager: FragmentManager) {
+        show(manager, javaClass.simpleName)
+    }
+
+    fun showNow(manager: FragmentManager) {
+        showNow(manager, javaClass.simpleName)
+    }
+
+    override fun show(manager: FragmentManager, tag: String?) {
+        accessFlag()
+        val ft = manager.beginTransaction()
+        ft.add(this, tag)
+        ft.commitAllowingStateLoss()
+    }
+
+    override fun showNow(manager: FragmentManager, tag: String?) {
+        accessFlag()
+        val ft = manager.beginTransaction()
+        ft.add(this, tag)
+        ft.commitNowAllowingStateLoss()
+    }
+
+    private fun accessFlag() {
+        val clazz = DialogFragment::class.java
+        val mDismissed = clazz.getDeclaredField("mDismissed")
+        mDismissed.isAccessible = true
+        mDismissed.setBoolean(this, false)
+        val mShownByMe = clazz.getDeclaredField("mShownByMe")
+        mShownByMe.isAccessible = true
+        mShownByMe.setBoolean(this, true)
+    }
+
+    override fun dismiss() {
+        dismissAllowingStateLoss()
     }
 }

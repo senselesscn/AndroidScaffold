@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
+@ExperimentalStdlibApi
 class DelegateAdapter() : RecyclerView.Adapter<DelegateViewHolder>() {
     val data: List<Any>
         get() = dataList

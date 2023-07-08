@@ -8,6 +8,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
+@ExperimentalStdlibApi
 class PagingLayout : SmartRefreshLayout, OnRefreshLoadMoreListener {
     private var index = startIndex
     private var nextIndex = startIndex
