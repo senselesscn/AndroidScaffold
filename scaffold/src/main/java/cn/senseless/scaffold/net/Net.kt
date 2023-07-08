@@ -21,7 +21,7 @@ import java.io.InputStream
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-
+@ExperimentalStdlibApi
 class Http(private val url: String) {
 
     @Throws(Exception::class)
@@ -141,6 +141,7 @@ fun Map<String, Any>.json(): RequestBody {
     return JsonUtils.toJson(this).toRequestBody("application/json".toMediaTypeOrNull())
 }
 
+@ExperimentalStdlibApi
 fun http(url: String): Http {
     return Http(url)
 }

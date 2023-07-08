@@ -9,10 +9,11 @@ import androidx.core.os.bundleOf
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import cn.senseless.scaffold.base.ScaffoldActivity
 import org.greenrobot.eventbus.EventBus
 import java.lang.reflect.ParameterizedType
 
-abstract class ScaffoldDialogFragment<T : ViewDataBinding> : DialogFragment() {
+abstract class ScaffoldDialogFragment<T : ViewDataBinding> : DialogFragment(), ILoading {
     private var _binding: T? = null
     protected val binding: T
         get() = _binding!!
@@ -60,7 +61,7 @@ abstract class ScaffoldDialogFragment<T : ViewDataBinding> : DialogFragment() {
     }
 
     override fun onDestroyView() {
-        if (enableEventBus() && EventBus.getDefault().isRegistered(this)) {
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
         }
         _binding = null
@@ -101,5 +102,25 @@ abstract class ScaffoldDialogFragment<T : ViewDataBinding> : DialogFragment() {
 
     override fun dismiss() {
         dismissAllowingStateLoss()
+    }
+
+    override fun dismissLoading() {
+        (activity as ScaffoldActivity<*>).dismissLoading()
+    }
+
+    override fun showLoading() {
+        (activity as ScaffoldActivity<*>).showLoading()
+    }
+
+    override fun isLoadingShown(): Boolean {
+        return (activity as ScaffoldActivity<*>).isLoadingShown
+    }
+
+    override fun showLoading(message: CharSequence?) {
+        (activity as ScaffoldActivity<*>).showLoading(message)
+    }
+
+    override fun dismissLoading(delay: Long) {
+        (activity as ScaffoldActivity<*>).dismissLoading(delay)
     }
 }
