@@ -9,7 +9,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import cn.senseless.scaffold.R
 import cn.senseless.scaffold.utils.clipOval
 
-class CircleImageView : AppCompatImageView {
+open class CircleImageView : AppCompatImageView {
     private var borderWidth = 0f
     private var borderColor = Color.TRANSPARENT
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)

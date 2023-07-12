@@ -11,7 +11,7 @@ import androidx.core.view.isVisible
 import cn.senseless.scaffold.R
 
 @ExperimentalStdlibApi
-class StateLayout @JvmOverloads constructor(
+open class StateLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs), OnClickListener {
     private var contentView: View? = null

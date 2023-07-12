@@ -117,66 +117,6 @@ fun View.disableOverScroller() {
     }
 }
 
-inline fun ViewPager2.addOnPageChangeListener(
-    crossinline onPageScrolled: (
-        position: Int,
-        positionOffset: Float,
-        positionOffsetPixels: Int
-    ) -> Unit = { _, _, _ -> },
-    crossinline onPageSelected: (position: Int) -> Unit = {},
-    crossinline onPageScrollStateChanged: (state: Int) -> Unit = {}
-): ViewPager2.OnPageChangeCallback {
-    val listener = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageScrollStateChanged(state: Int) {
-            super.onPageScrollStateChanged(state)
-            onPageScrollStateChanged(state)
-        }
-
-        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            onPageScrolled(position, positionOffset, positionOffsetPixels)
-        }
-
-        override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-            onPageSelected(position)
-        }
-    }
-    registerOnPageChangeCallback(listener)
-    return listener
-}
-
-inline fun ViewPager.addOnPageChangeListener(
-    crossinline onPageScrolled: (
-        position: Int,
-        positionOffset: Float,
-        positionOffsetPixels: Int
-    ) -> Unit = { _, _, _ -> },
-    crossinline onPageSelected: (position: Int) -> Unit = {},
-    crossinline onPageScrollStateChanged: (state: Int) -> Unit = {}
-): ViewPager.OnPageChangeListener {
-    val listener = object : ViewPager.OnPageChangeListener {
-        override fun onPageScrolled(
-            position: Int,
-            positionOffset: Float,
-            positionOffsetPixels: Int
-        ) {
-            onPageScrolled(position, positionOffset, positionOffsetPixels)
-        }
-
-        override fun onPageSelected(position: Int) {
-            onPageSelected(position)
-        }
-
-        override fun onPageScrollStateChanged(state: Int) {
-            onPageScrollStateChanged(state)
-        }
-
-    }
-    addOnPageChangeListener(listener)
-    return listener
-}
-
 inline fun TabLayout.addOnTabSelectedListener(
     crossinline onTabSelected: (tab: TabLayout.Tab) -> Unit = {},
     crossinline onTabUnselected: (tab: TabLayout.Tab) -> Unit = {},
@@ -198,40 +138,6 @@ inline fun TabLayout.addOnTabSelectedListener(
     addOnTabSelectedListener(listener)
     return listener
 }
-
-inline fun SeekBar.setOnSeekBarChangeListener(
-    crossinline onProgressChanged: (seekBar: SeekBar, progress: Int, fromUser: Boolean) -> Unit = { _, _, _ -> },
-    crossinline onStartTrackingTouch: (seekBar: SeekBar) -> Unit = {},
-    crossinline onStopTrackingTouch: (seekBar: SeekBar) -> Unit = {}
-): SeekBar.OnSeekBarChangeListener {
-    val listener = object : SeekBar.OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-            onProgressChanged(seekBar, progress, fromUser)
-        }
-
-        override fun onStartTrackingTouch(seekBar: SeekBar) {
-            onStartTrackingTouch(seekBar)
-        }
-
-        override fun onStopTrackingTouch(seekBar: SeekBar) {
-            onStopTrackingTouch(seekBar)
-        }
-    }
-    setOnSeekBarChangeListener(listener)
-    return listener
-}
-
-inline fun SeekBar.doOnProgressChanged(
-    crossinline action: (seekBar: SeekBar, progress: Int, fromUser: Boolean) -> Unit
-) = setOnSeekBarChangeListener(onProgressChanged = action)
-
-inline fun SeekBar.doOnStartTrackingTouch(
-    crossinline action: (seekBar: SeekBar) -> Unit
-) = setOnSeekBarChangeListener(onStartTrackingTouch = action)
-
-inline fun SeekBar.doOnStopTrackingTouch(
-    crossinline action: (seekBar: SeekBar) -> Unit
-) = setOnSeekBarChangeListener(onStopTrackingTouch = action)
 
 fun View.clipRadius(radius: Float) {
     clipToOutline = true

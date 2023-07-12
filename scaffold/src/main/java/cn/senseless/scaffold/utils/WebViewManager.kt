@@ -14,21 +14,6 @@ object WebViewManager {
     private const val TAG = "WebViewManager"
     private val idleWebViews = LinkedList<WebView>()
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun create(context: Context): WebView {
-        val cxt = MutableContextWrapper(context)
-        val webView = WebView(cxt)
-        webView.settings.apply {
-            javaScriptEnabled = true
-            useWideViewPort = true
-            allowContentAccess = true
-            allowContentAccess = true
-            allowFileAccess = true
-            domStorageEnabled = true
-        }
-        return webView
-    }
-
     fun recycle(webView: WebView) {
         webView.stopLoading()
         webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null)
@@ -48,13 +33,23 @@ object WebViewManager {
             return webView
         }
         Log.d(TAG, "obtain: 使用新webView")
-        return create(context)
+        return WebView(MutableContextWrapper(context)).also {
+            it.settings.apply {
+                @SuppressLint("SetJavaScriptEnabled")
+                javaScriptEnabled = true
+                useWideViewPort = true
+                allowContentAccess = true
+                allowContentAccess = true
+                allowFileAccess = true
+                domStorageEnabled = true
+            }
+        }
     }
 
     /**
      * 如果一段时间内不会用到WebView了，那么可以手动释放
      */
-    fun release(){
+    fun release() {
         for (webView in idleWebViews) {
             webView.destroy()
         }

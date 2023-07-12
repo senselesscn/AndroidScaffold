@@ -12,7 +12,7 @@ import cn.senseless.scaffold.utils.clipRadius
 /**
  * 不支持单独设置圆角，但无锯齿、支持阴影
  */
-class RoundImageView : AppCompatImageView {
+open class RoundImageView : AppCompatImageView {
     private var radius = 0f
     private var borderWidth = 0f
     private var borderColor = Color.TRANSPARENT
