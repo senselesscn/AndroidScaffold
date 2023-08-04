@@ -16,6 +16,7 @@ abstract class ScaffoldFragment<T : ViewDataBinding> : Fragment(), ILoading {
     private var _binding: T? = null
     protected val binding: T
         get() = _binding!!
+    private var lazyLoadFlag = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +41,14 @@ abstract class ScaffoldFragment<T : ViewDataBinding> : Fragment(), ILoading {
         loadData(savedInstanceState)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (!lazyLoadFlag) {
+            lazyLoadFlag = true
+            lazyLoad()
+        }
+    }
+
     @CallSuper
     open fun beforeInitView(savedInstanceState: Bundle?) {
     }
@@ -51,6 +60,10 @@ abstract class ScaffoldFragment<T : ViewDataBinding> : Fragment(), ILoading {
         if (enableEventBus() && !EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
         }
+    }
+
+    open fun lazyLoad() {
+
     }
 
     open fun enableEventBus() = false

@@ -9,6 +9,7 @@ import cn.senseless.scaffold.base.ScaffoldFragment
 class NewsFragment : ScaffoldFragment<FragmentNewsBinding>() {
     private val viewModel by viewModels<NewsViewModel>()
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun initView(savedInstanceState: Bundle?) {
         binding.pagingLayout.onLoadData = {
             viewModel.getNews(it).observe(viewLifecycleOwner) { resp ->
@@ -22,6 +23,7 @@ class NewsFragment : ScaffoldFragment<FragmentNewsBinding>() {
         binding.rvNews.adapter = DelegateAdapter(NewsDelegateItem())
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     override fun loadData(savedInstanceState: Bundle?) {
         super.loadData(savedInstanceState)
         binding.pagingLayout.autoRefresh()

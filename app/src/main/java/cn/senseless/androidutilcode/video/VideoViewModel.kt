@@ -41,6 +41,7 @@ class VideoViewModel : ScaffoldViewModel() {
         playerCache.clear()
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     fun getVideoList(num: Int) = liveData<State<List<Video>>> {
         try {
             val resp: VideoResp =
@@ -57,7 +58,7 @@ class VideoViewModel : ScaffoldViewModel() {
             if (resp.code == 200) {
                 emit(State.Success(resp.result))
             } else {
-                emit(State.Error(400, "接口异常"))
+                emit(State.Error.Default)
             }
         } catch (e: Exception) {
             emit(State.Error(500, "网络异常"))
