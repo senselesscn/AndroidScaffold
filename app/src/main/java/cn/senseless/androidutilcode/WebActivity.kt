@@ -2,16 +2,17 @@ package cn.senseless.androidutilcode
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import androidx.fragment.app.commit
 import cn.senseless.androidutilcode.databinding.ActivityWebBinding
 import cn.senseless.scaffold.base.ScaffoldActivity
-import cn.senseless.scaffold.base.WebViewCallback
 import cn.senseless.scaffold.base.WebViewFragment
 import cn.senseless.scaffold.utils.intentValue
 import com.gyf.immersionbar.ImmersionBar
 
-class WebActivity : ScaffoldActivity<ActivityWebBinding>(), WebViewCallback {
+class WebActivity : ScaffoldActivity<ActivityWebBinding>(), WebViewFragment.WebViewCallback {
     private val url by intentValue<String>("url")
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -41,5 +42,19 @@ class WebActivity : ScaffoldActivity<ActivityWebBinding>(), WebViewCallback {
 
     override fun onReceivedTitle(view: WebView, title: String?) {
         setTitle(title)
+    }
+
+    override fun onProgressChanged(view: WebView, newProgress: Int) {
+    }
+
+    override fun onReceivedError(
+        view: WebView?,
+        request: WebResourceRequest?,
+        error: WebResourceError?
+    ) {
+    }
+
+    override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+        return false
     }
 }

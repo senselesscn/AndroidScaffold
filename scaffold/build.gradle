@@ -15,7 +15,6 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -30,6 +29,7 @@ android {
         dataBinding true
     }
     resourcePrefix 'sca_'
+    namespace 'cn.senseless.scaffold'
 }
 
 dependencies {
@@ -45,7 +45,7 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.google.code.gson:gson:2.10.1'
-    api(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
+    api(platform("com.squareup.okhttp3:okhttp-bom:4.11.0"))
     api("com.squareup.okhttp3:okhttp")
     api("com.squareup.okhttp3:logging-interceptor")
 
@@ -56,14 +56,14 @@ dependencies {
 
     api 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
 
-    api 'com.github.li-xiaojun:XPopup:2.9.18'
+    api 'com.github.li-xiaojun:XPopup:2.9.19'
 
     api "org.greenrobot:eventbus:3.3.1"
 
     api 'io.github.scwang90:refresh-layout-kernel:2.0.6'      //核心必须依赖
     api 'io.github.scwang90:refresh-header-classics:2.0.6'    //经典刷新头
     api 'io.github.scwang90:refresh-header-material:2.0.6'    //谷歌刷新头
-    api 'com.github.bumptech.glide:glide:4.15.1'
+    api 'com.github.bumptech.glide:glide:4.16.0'
 }
 
 afterEvaluate {
@@ -73,7 +73,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.senselesscn'
                 artifactId = 'AndroidScaffold'
-                version = '1.1.5'
+                version = '1.1.6'
             }
         }
     }

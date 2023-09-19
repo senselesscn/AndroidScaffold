@@ -11,15 +11,6 @@ class NewsFragment : ScaffoldFragment<FragmentNewsBinding>() {
 
     @OptIn(ExperimentalStdlibApi::class)
     override fun initView(savedInstanceState: Bundle?) {
-        binding.pagingLayout.onLoadData = {
-            viewModel.getNews(it).observe(viewLifecycleOwner) { resp ->
-                if (resp.code == 200) {
-                    binding.pagingLayout.addData(resp.result?.newslist)
-                } else {
-                    binding.pagingLayout.finish(false)
-                }
-            }
-        }
         binding.rvNews.adapter = DelegateAdapter(NewsDelegateItem())
     }
 

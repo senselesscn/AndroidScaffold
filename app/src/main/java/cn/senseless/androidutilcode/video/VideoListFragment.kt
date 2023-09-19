@@ -32,25 +32,6 @@ class VideoListFragment : ScaffoldFragment<FragmentVideoListBinding>() {
     }
 
     private fun loadVideo(pageNum: Int) {
-        model.getVideoList(pageNum).observe(viewLifecycleOwner) {
-            when (it) {
-                is State.Error -> {
-                    dismissLoading()
-                    it.toast()
-                }
-
-                is State.Loading -> {
-                    showLoading()
-                }
-
-                is State.Success -> {
-                    this.pageNum = pageNum
-                    dismissLoading()
-                    videos.addAll(it.data)
-                    adapter.notifyItemRangeInserted(videos.size - it.data.size, it.data.size)
-                }
-            }
-        }
     }
 
     override fun onDetach() {
